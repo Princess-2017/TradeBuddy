@@ -1,0 +1,6 @@
+@TradeBuddy.Order.Api_HostAddress = http://localhost:5196
+
+GET {{TradeBuddy.Order.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
