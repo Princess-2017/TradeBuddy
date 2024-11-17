@@ -1,20 +1,27 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using TradeBuddy.Appointment.Application.Common.Interfaces;
 using TradeBuddy.Appointment.Infrastructure.Context;
+using TradeBuddy.Appointment.Infrastructure.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add services to the container
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add controllers to the service collection
+builder.Services.AddControllers();  // این خط را اضافه کنید
 
 // Data Base Context Service
 var gngConnStr = builder.Configuration.GetConnectionString("AppointmentService");
 builder.Services.AddDbContext<AppointmentDbContext>(options => options.UseSqlServer(gngConnStr).UseLazyLoadingProxies());
+// Add other necessary services like RabbitMQ or others
+// Example: Registering Messaging Service
+builder.Services.AddSingleton<IMessagingService, RabbitMqService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -22,5 +29,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable routing and define endpoints
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers(); // Ensure controllers are mapped
+});
 
 app.Run();

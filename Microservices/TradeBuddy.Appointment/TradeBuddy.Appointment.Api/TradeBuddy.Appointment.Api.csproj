@@ -21,8 +21,4 @@
     <ProjectReference Include="..\TradeBuddy.Appointment.Infrastructure\TradeBuddy.Appointment.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
-
 </Project>

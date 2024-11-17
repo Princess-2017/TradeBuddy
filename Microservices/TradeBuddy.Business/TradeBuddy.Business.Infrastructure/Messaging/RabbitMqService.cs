@@ -2,7 +2,9 @@
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
 using System.Text;
+using System.Threading.Tasks;
 using TradeBuddy.Business.Application.Common.Interfaces;
 
 namespace TradeBuddy.Business.Infrastructure.Messaging
@@ -21,23 +23,28 @@ namespace TradeBuddy.Business.Infrastructure.Messaging
             _queueName = configuration["RabbitMqSettings:QueueName"];
         }
 
-        public void Publish<T>(T message)
+        public async Task PublishAsync<T>(T message)
         {
-            _channel.QueueDeclare(queue: _queueName,
-                                  durable: true, // Durable queue
-                                  exclusive: false,
-                                  autoDelete: false,
-                                  arguments: null);
+            await Task.Run(() =>
+            {
+                _channel.QueueDeclare(queue: _queueName,
+                                      durable: true, // Durable queue
+                                      exclusive: false,
+                                      autoDelete: false,
+                                      arguments: null);
 
-            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
-            _channel.BasicPublish(exchange: "",
-                                  routingKey: _queueName,
-                                  basicProperties: null,
-                                  body: body);
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
+
+                _channel.BasicPublish(exchange: "",
+                                      routingKey: _queueName,
+                                      basicProperties: null,
+                                      body: body);
+            });
         }
 
-        public void Subscribe<T>(Action<T> onMessageReceived)
+        public async Task SubscribeAsync<T>(Func<T, Task> onMessageReceived)
         {
+            // Declare the queue, ensuring it's durable and persistent
             _channel.QueueDeclare(queue: _queueName,
                                   durable: true, // Durable queue
                                   exclusive: false,
@@ -45,19 +52,26 @@ namespace TradeBuddy.Business.Infrastructure.Messaging
                                   arguments: null);
 
             var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += (model, ea) =>
+
+            consumer.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+
                 var obj = JsonConvert.DeserializeObject<T>(message);
-                onMessageReceived(obj);
+
+                // Await the asynchronous processing of the message
+                await onMessageReceived(obj);
             };
 
-            _channel.BasicConsume(queue: _queueName,
-                                 autoAck: true,
-                                 consumer: consumer);
+            // Start consuming messages
+            await Task.Run(() =>
+            {
+                _channel.BasicConsume(queue: _queueName,
+                                     autoAck: true,
+                                     consumer: consumer);
+            });
         }
+
     }
-
-
 }

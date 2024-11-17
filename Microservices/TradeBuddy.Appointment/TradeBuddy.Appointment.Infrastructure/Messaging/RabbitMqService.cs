@@ -49,14 +49,24 @@ namespace TradeBuddy.Appointment.Infrastructure.Messaging
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                var obj = JsonConvert.DeserializeObject<T>(message);
-                onMessageReceived(obj);
+
+                try
+                {
+                    var obj = JsonConvert.DeserializeObject<T>(message);
+                    onMessageReceived(obj);
+                }
+                catch (JsonException ex)
+                {
+                    // در صورت بروز خطا در deserialization، اینجا گزارش داده می‌شود.
+                    Console.WriteLine($"Error deserializing message: {ex.Message}");
+                }
             };
 
             _channel.BasicConsume(queue: _queueName,
                                  autoAck: true,
                                  consumer: consumer);
         }
+
     }
 
 
