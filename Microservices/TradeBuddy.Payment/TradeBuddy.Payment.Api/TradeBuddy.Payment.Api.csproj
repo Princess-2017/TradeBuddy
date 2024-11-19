@@ -20,8 +20,4 @@
     <ProjectReference Include="..\TradeBuddy.Payment.Infrastructure\TradeBuddy.Payment.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TradeBuddy.Appointment.Application.Common.Interfaces;
+using TradeBuddy.Appointment.Application.Services;
 using TradeBuddy.Appointment.Infrastructure.Context;
 using TradeBuddy.Appointment.Infrastructure.Messaging;
 
@@ -18,6 +19,9 @@ builder.Services.AddDbContext<AppointmentDbContext>(options => options.UseSqlSer
 // Add other necessary services like RabbitMQ or others
 // Example: Registering Messaging Service
 builder.Services.AddSingleton<IMessagingService, RabbitMqService>();
+// یا می‌توانید از Transient هم استفاده کنید.
+builder.Services.AddTransient<IHostedService, MessageListenerService>();
+
 
 var app = builder.Build();
 

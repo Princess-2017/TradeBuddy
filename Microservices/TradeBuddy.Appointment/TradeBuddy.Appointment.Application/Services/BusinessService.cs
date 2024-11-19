@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using TradeBuddy.Business.Application.Common.Interfaces;
+using TradeBuddy.Appointment.Application.Common.Interfaces;
 
-namespace TradeBuddy.Business.Application.Service
+namespace TradeBuddy.Appointment.Application.Services
 {
-    // Create a model for messages received from the queue
     public class AppointmentRequestMessage
     {
         public string Action { get; set; }
@@ -91,5 +92,4 @@ namespace TradeBuddy.Business.Application.Service
             }
         }
     }
-
 }

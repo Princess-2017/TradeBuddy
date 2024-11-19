@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace TradeBuddy.Appointment.Application.Common.Interfaces
@@ -9,18 +6,17 @@ namespace TradeBuddy.Appointment.Application.Common.Interfaces
     public interface IMessagingService
     {
         /// <summary>
-        /// ارسال پیام به صف (queue) تعریف‌شده.
+        /// ارسال پیام به صف (queue) تعریف‌شده به صورت غیر همزمان.
         /// </summary>
         /// <typeparam name="T">نوع پیام</typeparam>
         /// <param name="message">پیام مورد نظر برای ارسال</param>
-        void Publish<T>(T message);
+        Task PublishAsync<T>(T message);
 
         /// <summary>
-        /// دریافت پیام‌ها از صف (queue) تعریف‌شده و پردازش آن‌ها.
+        /// دریافت پیام‌ها از صف (queue) تعریف‌شده و پردازش آن‌ها به صورت غیر همزمان.
         /// </summary>
         /// <typeparam name="T">نوع پیام</typeparam>
         /// <param name="onMessageReceived">اکشنی که پیام دریافت شده را پردازش می‌کند</param>
-        void Subscribe<T>(Action<T> onMessageReceived);
+        Task SubscribeAsync<TMessage>(Func<TMessage, Task> onMessageReceived);
     }
-
 }

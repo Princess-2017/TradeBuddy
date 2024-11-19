@@ -17,8 +17,11 @@ builder.Services.AddDbContext<BusinessDbContext>(options =>
     options.UseSqlServer(gngConnStr).UseLazyLoadingProxies());
 
 // اضافه کردن سرویس‌ها به DI
-builder.Services.AddSingleton<IMessagingService, RabbitMqService>();  // فرض کنید که این سرویس از قبل پیاده‌سازی شده است.
-builder.Services.AddSingleton<IBusinessService, BusinessService>();
+builder.Services.AddScoped<IBusinessService, BusinessService>();  // برای چرخه حیات درخواست
+builder.Services.AddScoped<IMessagingService, RabbitMqService>();
+// یا می‌توانید از Transient هم استفاده کنید.
+builder.Services.AddTransient<IHostedService, MessageListenerService>();
+
 
 var app = builder.Build();
 
