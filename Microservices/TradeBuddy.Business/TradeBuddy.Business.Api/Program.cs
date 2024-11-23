@@ -22,18 +22,21 @@ builder.Services.AddScoped<IMessagingService, RabbitMqService>();
 // یا می‌توانید از Transient هم استفاده کنید.
 builder.Services.AddTransient<IHostedService, MessageListenerService>();
 
+// خواندن آدرس سرویس از appsettings.json
+var reviewServiceUrl = builder.Configuration["ServiceUrls:ReviewService"];
+
+// تنظیم HttpClient با آدرس سرویس
+builder.Services.AddHttpClient<IReviewServiceClient, ReviewServiceClient>(client =>
+{
+    client.BaseAddress = new Uri(reviewServiceUrl); // آدرس سرویس از appsettings خوانده می‌شود
+});
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-
-// Here, you can add custom middlewares or other configurations
 
 app.Run();

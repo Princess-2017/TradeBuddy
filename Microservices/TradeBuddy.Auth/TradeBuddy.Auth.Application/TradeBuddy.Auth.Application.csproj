@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
+    <PackageReference Include="PersianDateTime" Version="1.1.5082.36395" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TradeBuddy.Auth.Domain\TradeBuddy.Auth.Domain.csproj" />
+    <ProjectReference Include="..\TradeBuddy.Auth.Infrastructure\TradeBuddy.Auth.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

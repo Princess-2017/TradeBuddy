@@ -8,6 +8,7 @@ namespace TradeBuddy.Auth.Domain.Enums
 {
     public enum UserType
     {
+        Admin,
         BusinessOwner,
         Customer
     }

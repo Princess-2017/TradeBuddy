@@ -13,10 +13,11 @@ namespace TradeBuddy.Auth.Domain.Entities
         public virtual FirstName FirstName { get; private set; }
         public virtual LastName LastName { get; private set; }
         public virtual Email Email { get; private set; }
-        public virtual Phone Phone { get; private set; }
+        public virtual Phone Phone { get; protected set; }  // دسترسی protected به Phone
         public virtual Address Address { get; private set; }
-        public bool IsActive { get; private set; }
-        public UserType UserType { get; private set; } // نوع کاربر
+        public bool IsActive { get; protected set; }  // دسترسی protected به IsActive
+        public UserType UserType { get; private set; }
+        public string OAuthClientId { get; private set; }
 
         private readonly HashSet<RoleId> _roles = new();
         private readonly HashSet<PermissionId> _permissions = new();
@@ -32,10 +33,10 @@ namespace TradeBuddy.Auth.Domain.Entities
             FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
             LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
             Email = email ?? throw new ArgumentNullException(nameof(email));
-            Phone = phone ?? throw new ArgumentNullException(nameof(phone));
+            Phone = phone ?? throw new ArgumentNullException(nameof(phone));  // اختصاص به Phone
             Address = address ?? throw new ArgumentNullException(nameof(address));
             IsActive = true;
-            UserType = userType; // مقداردهی نوع کاربر
+            UserType = userType;
         }
 
         // متدهای مدیریت نقش‌ها و مجوزها
@@ -47,6 +48,16 @@ namespace TradeBuddy.Auth.Domain.Entities
         public void RemovePermission(PermissionId permissionId) => _permissions.Remove(permissionId ?? throw new ArgumentNullException(nameof(permissionId)));
         public IEnumerable<PermissionId> GetPermissions() => _permissions;
     }
+
+
+    public class Admin : User
+    {
+        public Admin(UserId id, Username username, string passwordHash, FirstName firstName, LastName lastName, Email email, Phone phone, Address address)
+            : base(id, username, passwordHash, firstName, lastName, email, phone, address, UserType.Admin)
+        {
+        }
+    }
+
 
     public class BusinessOwner : User
     {

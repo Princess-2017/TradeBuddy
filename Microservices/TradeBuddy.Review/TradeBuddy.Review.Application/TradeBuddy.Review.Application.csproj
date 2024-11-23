@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="PersianDateTime" Version="1.1.5082.36395" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TradeBuddy.Review.Infrastructure\TradeBuddy.Review.Infrastructure.csproj" />
+    <ProjectReference Include="..\TradeBuddy.Review.Domain\TradeBuddy.Review.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

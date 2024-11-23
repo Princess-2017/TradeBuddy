@@ -47,6 +47,9 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BusinessCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("BusinessTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -86,9 +89,56 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BusinessCategoryId");
+
                     b.HasIndex("BusinessTypeId");
 
                     b.ToTable("Businesses");
+                });
+
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.BusinessCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreateBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleteBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UpdateBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BusinessCategories");
                 });
 
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.BusinessHours", b =>
@@ -308,11 +358,19 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
 
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Business", b =>
                 {
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessCategory", "BusinessCategory")
+                        .WithMany("Businesses")
+                        .HasForeignKey("BusinessCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessType", "BusinessType")
                         .WithMany()
                         .HasForeignKey("BusinessTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("BusinessCategory");
 
                     b.Navigation("BusinessType");
                 });
@@ -378,6 +436,11 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Business", b =>
                 {
                     b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.BusinessCategory", b =>
+                {
+                    b.Navigation("Businesses");
                 });
 
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.BusinessHours", b =>

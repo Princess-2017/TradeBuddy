@@ -20,8 +20,4 @@
     <ProjectReference Include="..\TradeBuddy.Reservation.Infrastructure\TradeBuddy.Reservation.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
-
 </Project>

@@ -23,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TradeBuddy.Auth.Application\TradeBuddy.Auth.Application.csproj" />
+    <ProjectReference Include="..\TradeBuddy.Auth.Domain\TradeBuddy.Auth.Domain.csproj" />
     <ProjectReference Include="..\TradeBuddy.Auth.Infrastructure\TradeBuddy.Auth.Infrastructure.csproj" />
   </ItemGroup>
 
