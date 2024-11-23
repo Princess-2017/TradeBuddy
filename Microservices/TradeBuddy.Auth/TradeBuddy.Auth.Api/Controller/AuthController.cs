@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TradeBuddy.Auth.Application.Commands.User;
 using TradeBuddy.Auth.Application.Queries;
+using TradeBuddy.Business.Application.Queries.User;
 
 namespace TradeBuddy.Auth.Api.Controllers
 {
@@ -51,23 +52,7 @@ namespace TradeBuddy.Auth.Api.Controllers
             return Ok(result); // توکن JWT یا اطلاعات کاربر باز می‌گردد
         }
 
-        /// <summary>
-        /// دریافت اطلاعات کاربر
-        /// </summary>
-        [HttpGet("me")]
-        public async Task<IActionResult> GetUserInfo()
-        {
-            var userId = User.Identity.Name; // فرض بر این است که نام کاربری به عنوان شناسه ذخیره شده باشد
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("شما وارد نشده‌اید.");
 
-            var query = new GetUserInfoQuery { UserId = userId };
-            var result = await _mediator.Send(query);
 
-            if (result == null)
-                return NotFound("کاربری با این شناسه پیدا نشد.");
-
-            return Ok(result);
-        }
     }
 }

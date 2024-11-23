@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
-    <PackageReference Include="PersianDateTime" Version="1.1.5082.36395" />
   </ItemGroup>
 
   <ItemGroup>

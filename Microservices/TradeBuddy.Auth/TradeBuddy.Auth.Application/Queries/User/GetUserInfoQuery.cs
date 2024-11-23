@@ -12,5 +12,9 @@ namespace TradeBuddy.Business.Application.Queries.User
         /// شناسه کاربر
         /// </summary>
         public Guid UserId { get; set; }
+        public GetUserInfoQuery(Guid userId)
+        {
+            UserId = userId;
+        }
     }
 }

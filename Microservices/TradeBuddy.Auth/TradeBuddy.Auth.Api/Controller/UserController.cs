@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TradeBuddy.Auth.Application.Commands.User;
-using TradeBuddy.Business.Application.Commands.Auth;
-using TradeBuddy.Business.Application.Queries.Auth;
+using TradeBuddy.Business.Application.Queries.User;
 
 namespace TradeBuddy.Business.Api.Controllers
 {
@@ -55,16 +54,21 @@ namespace TradeBuddy.Business.Api.Controllers
         /// <summary>
         /// دریافت اطلاعات کاربر
         /// </summary>
-        [HttpGet("me")]
+        [HttpGet("GetUserInfo")]
         public async Task<IActionResult> GetUserInfo()
         {
-            var userId = User.Identity.Name; // فرض بر این است که نام کاربری به عنوان شناسه ذخیره شده باشد
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("شما وارد نشده‌اید.");
+            // دریافت UserId از کلایم JWT یا Identity
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "sub"); // یا "userId"
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out Guid userIdGuid))
+                return Unauthorized("شما وارد نشده‌اید یا شناسه کاربری نامعتبر است.");
 
-            var query = new GetUserInfoQuery { UserId = userId };
+            // ایجاد کوئری
+            var query = new GetUserInfoQuery(userIdGuid);
+
+            // ارسال کوئری به MediatR
             var result = await _mediator.Send(query);
 
+            // بررسی نتیجه
             if (result == null)
                 return NotFound("کاربری با این شناسه پیدا نشد.");
 

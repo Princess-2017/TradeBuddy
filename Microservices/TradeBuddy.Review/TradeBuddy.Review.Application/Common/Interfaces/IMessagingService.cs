@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using TradeBuddy.Business.Application.Service;
+using TradeBuddy.Review.Application.Service;
 
-namespace TradeBuddy.Business.Application.Common.Interfaces
+namespace TradeBuddy.Review.Application.Common.Interfaces
 {
     public interface IMessagingService
     {

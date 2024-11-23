@@ -1,5 +1,6 @@
 ﻿using System;
-using PersianDateTime;
+using System.Globalization;
+
 
 namespace TradeBuddy.Review.Application.Exceptions
 {
@@ -7,7 +8,15 @@ namespace TradeBuddy.Review.Application.Exceptions
     {
         public static string ToPersianDateString(this DateTime dateTime)
         {
-            return new PersianDateTime(dateTime).ToString("yyyy/MM/dd HH:mm:ss");
+            var persianCalendar = new PersianCalendar();
+
+            // استخراج سال، ماه و روز به صورت جداگانه
+            int year = persianCalendar.GetYear(dateTime);
+            int month = persianCalendar.GetMonth(dateTime);
+            int day = persianCalendar.GetDayOfMonth(dateTime);
+
+            // قالب‌بندی رشته
+            return $"{year:0000}/{month:00}/{day:00} {dateTime:HH:mm:ss}";
         }
     }
 }
