@@ -13,8 +13,7 @@ namespace TradeBuddy.Business.Domain.Entities
         public string Phone { get; private set; }
 
         // Address Details
-        public string AddressLine1 { get; private set; }
-        public string AddressLine2 { get; private set; }
+        public string Address { get; private set; }
         public string City { get; private set; }
         public string State { get; private set; }
         public string PostalCode { get; private set; }
@@ -36,7 +35,6 @@ namespace TradeBuddy.Business.Domain.Entities
         public double AverageRating { get; private set; } // میانگین امتیاز
 
         // Operational Information
-        public string HoursOfOperation { get; private set; } // Example: JSON or formatted string for daily hours
         public bool IsVerified { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
@@ -48,8 +46,7 @@ namespace TradeBuddy.Business.Domain.Entities
             string website,
             string email,
             string phone,
-            string addressLine1,
-            string addressLine2,
+            string address,
             string city,
             string state,
             string postalCode,
@@ -66,8 +63,7 @@ namespace TradeBuddy.Business.Domain.Entities
             Website = website;
             Email = email;
             Phone = phone;
-            AddressLine1 = addressLine1;
-            AddressLine2 = addressLine2;
+            Address = address;
             City = city;
             State = state;
             PostalCode = postalCode;
@@ -97,7 +93,7 @@ namespace TradeBuddy.Business.Domain.Entities
 
         // متد برای بروزرسانی مشخصات کسب و کار
         public void UpdateDetails(string name, string description, string website, string email, string phone,
-            string addressLine1, string addressLine2, string city, string state, string postalCode, string country,
+            string address, string city, string state, string postalCode, string country,
             decimal latitude, decimal longitude, Guid businessTypeId, Guid businessCategoryId)
         {
             Name = name;
@@ -105,8 +101,7 @@ namespace TradeBuddy.Business.Domain.Entities
             Website = website;
             Email = email;
             Phone = phone;
-            AddressLine1 = addressLine1;
-            AddressLine2 = addressLine2;
+            Address = address;
             City = city;
             State = state;
             PostalCode = postalCode;
@@ -127,6 +122,5 @@ namespace TradeBuddy.Business.Domain.Entities
 
         // Other operational methods
         public void VerifyBusiness() => IsVerified = true;
-        public void UpdateHoursOfOperation(string hours) => HoursOfOperation = hours;
     }
 }

@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\TradeBuddy.Business.Application\TradeBuddy.Business.Application.csproj" />
+		<ProjectReference Include="..\TradeBuddy.Business.Domain\TradeBuddy.Business.Domain.csproj" />
 		<ProjectReference Include="..\TradeBuddy.Business.Infrastructure\TradeBuddy.Business.Infrastructure.csproj" />
 	</ItemGroup>
 

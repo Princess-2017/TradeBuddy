@@ -10,6 +10,8 @@ namespace TradeBuddy.Business.Domain.Interfaces
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(TKey id);
+        Task<int> CountAsync();
+        Task<IEnumerable<T>> GetPagedAsync(int pageNumber, int pageSize);
     }
 }
 

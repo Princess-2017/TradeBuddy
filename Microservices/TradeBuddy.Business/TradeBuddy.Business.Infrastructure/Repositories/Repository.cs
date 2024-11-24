@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using TradeBuddy.Business.Domain.Entities;
 using TradeBuddy.Business.Domain.Interfaces;
+using TradeBuddy.Business.Infrastructure.Context;
 
 namespace TradeBuddy.Business.Infrastructure.Repositories
 {
     public class GenericRepository<T, TKey> : IRepository<T, TKey> where T : BaseEntity<TKey>
     {
-        private readonly DbContext _context;
+        private readonly BusinessDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(BusinessDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
@@ -50,6 +51,18 @@ namespace TradeBuddy.Business.Infrastructure.Repositories
                 _dbSet.Remove(entity);
                 await _context.SaveChangesAsync();
             }
+        }
+        public async Task<IEnumerable<T>> GetPagedAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Set<T>()
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.Set<T>().CountAsync();
         }
     }
 }
