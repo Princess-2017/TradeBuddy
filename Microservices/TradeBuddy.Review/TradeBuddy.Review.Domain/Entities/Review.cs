@@ -9,13 +9,15 @@ namespace TradeBuddy.Review.Domain.Entities
 {
     public class Review : BaseEntity<long>
     {
-        public int BusinessId { get; private set; } // شناسه کسب‌وکار
-        public string UserId { get; private set; } // شناسه کاربر
-        public Rating Rating { get; private set; } // امتیاز (Value Object)
+        public Guid BusinessId { get; private set; } // شناسه کسب‌وکار
+        public Guid UserId { get; private set; } // شناسه کاربر
+        public Rating Rating { get; set; } // امتیاز (Value Object)
         public string Comment { get; private set; } // متن نظر
 
+        public Review(){}
+
         // سازنده برای مقداردهی اولیه
-        public Review(int businessId, string userId, Rating rating, string comment)
+        public Review(Guid businessId, Guid userId, Rating rating, string comment)
         {
             BusinessId = businessId;
             UserId = userId;

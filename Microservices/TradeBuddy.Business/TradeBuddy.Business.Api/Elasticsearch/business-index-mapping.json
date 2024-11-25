@@ -1,0 +1,25 @@
+{
+  "mappings": {
+    "properties": {
+      "id": { "type": "keyword" },
+      "name": { "type": "text" },
+      "description": { "type": "text" },
+      "website": { "type": "keyword" },
+      "email": { "type": "keyword" },
+      "phone": { "type": "keyword" },
+      "address": { "type": "text" },
+      "city": { "type": "keyword" },
+      "state": { "type": "keyword" },
+      "postalCode": { "type": "keyword" },
+      "country": { "type": "keyword" },
+      "location": { "type": "geo_point" }, // فیلد ترکیبی برای مختصات جغرافیایی
+      "businessTypeId": { "type": "keyword" },
+      "businessCategoryId": { "type": "keyword" },
+      "isVerified": { "type": "boolean" },
+      "totalReviews": { "type": "integer" },
+      "averageRating": { "type": "double" },
+      "createdAt": { "type": "date" },
+      "updatedAt": { "type": "date" }
+    }
+  }
+}

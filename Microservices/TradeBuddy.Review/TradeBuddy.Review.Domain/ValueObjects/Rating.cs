@@ -18,6 +18,8 @@ namespace TradeBuddy.Review.Domain.ValueObjects
             Value = value;
         }
 
+        public Rating () { }
+
         public static implicit operator int(Rating rating) => rating.Value;
         public static implicit operator Rating(int value) => new Rating(value);
     }

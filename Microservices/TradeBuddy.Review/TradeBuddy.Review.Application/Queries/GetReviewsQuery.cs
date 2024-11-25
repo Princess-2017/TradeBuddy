@@ -10,6 +10,6 @@ namespace TradeBuddy.Review.Application.Queries
 {
     public class GetReviewsQuery : IRequest<List<ReviewDto>>
     {
-        public int BusinessId { get; set; }
+        public Guid BusinessId { get; set; }
     }
 }

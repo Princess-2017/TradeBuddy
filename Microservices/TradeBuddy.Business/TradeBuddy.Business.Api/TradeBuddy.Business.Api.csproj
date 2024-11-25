@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="Elasticsearch\business-index-mapping.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="MediatR" Version="12.4.1" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
@@ -23,6 +27,12 @@
 		<ProjectReference Include="..\TradeBuddy.Business.Application\TradeBuddy.Business.Application.csproj" />
 		<ProjectReference Include="..\TradeBuddy.Business.Domain\TradeBuddy.Business.Domain.csproj" />
 		<ProjectReference Include="..\TradeBuddy.Business.Infrastructure\TradeBuddy.Business.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Elasticsearch\business-index-mapping.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

@@ -5,12 +5,12 @@ namespace TradeBuddy.Review.Domain.Entities
     {
         public TId Id { get; protected set; }
         public DateTime CreateDate { get; protected set; }
-        public string CreateBy { get; protected set; }
+        public string? CreateBy { get; protected set; }
         public DateTime? UpdateDate { get; protected set; }
-        public string UpdateBy { get; protected set; }
+        public string? UpdateBy { get; protected set; }
         public bool IsDeleted { get; protected set; }
         public DateTime? DeleteDate { get; protected set; }
-        public string DeleteBy { get; protected set; }
+        public string? DeleteBy { get; protected set; }
 
         protected BaseEntity()
         {

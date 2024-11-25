@@ -9,8 +9,8 @@ namespace TradeBuddy.Review.Application.Commands
 {
     public class AddReviewCommand : IRequest<long>
     {
-        public int BusinessId { get; set; }
-        public string UserId { get; set; }
+        public Guid BusinessId { get; set; }
+        public Guid UserId { get; set; }
         public int Rating { get; set; }
         public string Comment { get; set; }
     }

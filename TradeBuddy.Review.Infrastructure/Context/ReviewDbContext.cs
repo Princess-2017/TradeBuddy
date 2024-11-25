@@ -10,6 +10,8 @@ namespace TradeBuddy.Review.Infrastructure.Context
 {
     public class ReviewDbContext : DbContext
     {
+        public ReviewDbContext(DbContextOptions<ReviewDbContext> options) : base(options) { }
+
         public DbSet<TradeBuddy.Review.Domain.Entities.Review> Reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,7 +24,11 @@ namespace TradeBuddy.Review.Infrastructure.Context
                 .HasMaxLength(1000);
 
             modelBuilder.Entity<TradeBuddy.Review.Domain.Entities.Review>()
-                .HasIndex(r => r.BusinessId); // بهینه‌سازی جستجو
+                .HasIndex(r => r.BusinessId); // Optimize searches by BusinessId
+
+            // Configure the Rating value object to be part of Review entity
+            modelBuilder.Entity<TradeBuddy.Review.Domain.Entities.Review>()
+                .OwnsOne(r => r.Rating);
 
             base.OnModelCreating(modelBuilder);
         }

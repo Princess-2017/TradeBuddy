@@ -7,15 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using TradeBuddy.Review.Domain.Entities;
 using TradeBuddy.Review.Domain.Interfaces;
+using TradeBuddy.Review.Infrastructure.Context;
 
-namespace TradeBuddy.Business.Infrastructure.Repositories
+namespace TradeBuddy.Review.Infrastructure.Repositories
 {
     public class GenericRepository<T, TKey> : IRepository<T, TKey> where T : BaseEntity<TKey>
     {
-        private readonly DbContext _context;
+        private readonly ReviewDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(ReviewDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
