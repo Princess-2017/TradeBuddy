@@ -11,8 +11,8 @@ namespace TradeBuddy.FileManager.Application.Common.Interfaces
         Task<string> AddFileAsync(string fileName, string mimeType, byte[] content);
         Task<bool> DeleteFileAsync(string id);
         Task<bool> UpdateFileAsync(string id, string newFileName, byte[] newContent);
-        Task<File> GetFileByIdAsync(string id);
-        Task<List<File>> GetAllFilesAsync();
+        Task<TradeBuddy.FileManager.Domain.Entities.File> GetFileByIdAsync(string id);
+        Task<List<TradeBuddy.FileManager.Domain.Entities.File>> GetAllFilesAsync();
     }
 }
 
