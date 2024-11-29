@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TradeBuddy.Review.Application.Commands
 {
-    public class AddReviewCommand : IRequest<long>
+    public class AddReviewCommand : IRequest<Guid>
     {
         public Guid BusinessId { get; set; }
         public Guid UserId { get; set; }

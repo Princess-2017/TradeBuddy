@@ -19,12 +19,23 @@ namespace TradeBuddy.Auth.Domain.Entities
         public UserType UserType { get; private set; }
         public string OAuthClientId { get; private set; }
 
+
+        // جدید: فیلدهای اضافی
+        public string RefreshToken { get; private set; }
+        public DateTime RefreshTokenExpiry { get; private set; }
+        public DateTime TokenExpiry { get; private set; }
+        public DateTime LastLogin { get; private set; }
+        public bool IsLocked { get; private set; }
+        public int FailedLoginAttempts { get; private set; }
+        public bool EmailVerified { get; private set; }
+        public bool PhoneVerified { get; private set; }
+        public bool TwoFactorEnabled { get; private set; }
+
         private readonly HashSet<RoleId> _roles = new();
         private readonly HashSet<PermissionId> _permissions = new();
 
         // سازنده بدون پارامتر برای EF Core
         protected User() { }
-
         public User(UserId id, Username username, string passwordHash, FirstName firstName, LastName lastName, Email email, Phone phone, Address address, UserType userType)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
@@ -33,12 +44,22 @@ namespace TradeBuddy.Auth.Domain.Entities
             FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
             LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
             Email = email ?? throw new ArgumentNullException(nameof(email));
-            Phone = phone ?? throw new ArgumentNullException(nameof(phone));  // اختصاص به Phone
+            Phone = phone ?? throw new ArgumentNullException(nameof(phone));
             Address = address ?? throw new ArgumentNullException(nameof(address));
             IsActive = true;
             UserType = userType;
-        }
 
+            // مقداردهی پیش‌فرض فیلدهای جدید
+            RefreshToken = string.Empty;
+            RefreshTokenExpiry = DateTime.MinValue;
+            TokenExpiry = DateTime.MinValue;
+            LastLogin = DateTime.Now;
+            IsLocked = false;
+            FailedLoginAttempts = 0;
+            EmailVerified = false;
+            PhoneVerified = false;
+            TwoFactorEnabled = false;
+        }
         // متدهای مدیریت نقش‌ها و مجوزها
         public void AssignRole(RoleId roleId) => _roles.Add(roleId ?? throw new ArgumentNullException(nameof(roleId)));
         public void RemoveRole(RoleId roleId) => _roles.Remove(roleId ?? throw new ArgumentNullException(nameof(roleId)));

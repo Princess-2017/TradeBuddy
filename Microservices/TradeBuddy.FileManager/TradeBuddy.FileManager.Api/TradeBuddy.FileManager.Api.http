@@ -1,0 +1,6 @@
+@TradeBuddy.FileManager.Api_HostAddress = http://localhost:5063
+
+GET {{TradeBuddy.FileManager.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

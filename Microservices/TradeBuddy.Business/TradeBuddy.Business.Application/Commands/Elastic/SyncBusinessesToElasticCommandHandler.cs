@@ -46,8 +46,8 @@ namespace TradeBuddy.Business.Application.Commands.Elastic
                         Email = business.Email,
                         Phone = business.Phone,
                         Address = business.Address,
-                        City = business.City,
-                        State = business.State,
+                        City = business.CityId,
+                        State = business.StateId,
                         PostalCode = business.PostalCode,
                         Country = business.Country,
                         Location = $"{business.Latitude},{business.Longitude}", // ارسال موقعیت جغرافیایی

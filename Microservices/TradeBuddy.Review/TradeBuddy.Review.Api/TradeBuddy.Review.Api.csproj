@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\..\TradeBuddy.Review.Infrastructure\TradeBuddy.Review.Infrastructure.csproj" />
     <ProjectReference Include="..\TradeBuddy.Review.Application\TradeBuddy.Review.Application.csproj" />
     <ProjectReference Include="..\TradeBuddy.Review.Domain\TradeBuddy.Review.Domain.csproj" />
+    <ProjectReference Include="..\TradeBuddy.Review.Infrastructure\TradeBuddy.Review.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

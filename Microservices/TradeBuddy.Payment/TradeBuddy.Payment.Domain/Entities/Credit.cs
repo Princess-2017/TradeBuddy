@@ -7,12 +7,12 @@ using TradeBuddy.Payment.Domain.ValueObjects;
 
 namespace TradeBuddy.Payment.Domain.Entities
 {
-    public class Credit : BaseEntity<CreditId>
+    public class Credit : BaseEntity<Guid>
     {
         public UserId UserId { get; private set; }
         public CreditAmount Amount { get; private set; }
 
-        public Credit(CreditId id, UserId userId, CreditAmount initialAmount)
+        public Credit(Guid id, UserId userId, CreditAmount initialAmount)
         {
             Id = id;
             UserId = userId;

@@ -13,9 +13,9 @@ namespace TradeBuddy.Review.Application.Queries
 {
     public class GetReviewsQueryHandler : IRequestHandler<GetReviewsQuery, List<ReviewDto>>
     {
-        private readonly IRepository<TradeBuddy.Review.Domain.Entities.Review, long> _reviewRepository;
+        private readonly IRepository<TradeBuddy.Review.Domain.Entities.Review, Guid> _reviewRepository;
 
-        public GetReviewsQueryHandler(IRepository<TradeBuddy.Review.Domain.Entities.Review, long> reviewRepository)
+        public GetReviewsQueryHandler(IRepository<TradeBuddy.Review.Domain.Entities.Review, Guid> reviewRepository)
         {
             _reviewRepository = reviewRepository;
         }
@@ -29,7 +29,7 @@ namespace TradeBuddy.Review.Application.Queries
 
             return reviews.Select(r => new ReviewDto
             {
-                ReviewId = r.Id,
+                ReviewId = Guid.NewGuid(),
                 Rating = r.Rating.Value,
                 Comment = r.Comment,
                 CreatedAt = r.CreateDate.ToPersianDateString() // تبدیل به تاریخ شمسی

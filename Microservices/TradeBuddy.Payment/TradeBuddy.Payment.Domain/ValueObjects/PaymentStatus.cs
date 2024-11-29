@@ -13,27 +13,16 @@ namespace TradeBuddy.Payment.Domain.ValueObjects
 
         public PaymentStatus(string status)
         {
-            Status = status ?? throw new ArgumentNullException(nameof(status));
+            if (string.IsNullOrWhiteSpace(status))
+                throw new ArgumentException("Payment status cannot be null or empty.", nameof(status));
+
+            Status = status;
         }
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as PaymentStatus);
-        }
-
-        public bool Equals(PaymentStatus other)
-        {
-            return other != null && Status == other.Status;
-        }
-
-        public override int GetHashCode()
-        {
-            return Status.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return Status;
-        }
+        public override bool Equals(object obj) => Equals(obj as PaymentStatus);
+        public bool Equals(PaymentStatus other) => other != null && Status == other.Status;
+        public override int GetHashCode() => Status.GetHashCode();
+        public override string ToString() => Status;
     }
+
 }

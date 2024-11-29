@@ -8,27 +8,16 @@ namespace TradeBuddy.Payment.Domain.ValueObjects
 
         public PaymentMethod(string method)
         {
-            Method = method ?? throw new ArgumentNullException(nameof(method));
+            if (string.IsNullOrWhiteSpace(method))
+                throw new ArgumentException("Payment method cannot be null or empty.", nameof(method));
+
+            Method = method;
         }
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as PaymentMethod);
-        }
-
-        public bool Equals(PaymentMethod other)
-        {
-            return other != null && Method == other.Method;
-        }
-
-        public override int GetHashCode()
-        {
-            return Method.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return Method;
-        }
+        public override bool Equals(object obj) => Equals(obj as PaymentMethod);
+        public bool Equals(PaymentMethod other) => other != null && Method == other.Method;
+        public override int GetHashCode() => Method.GetHashCode();
+        public override string ToString() => Method;
     }
+
 }

@@ -14,8 +14,8 @@ namespace TradeBuddy.Business.Domain.Entities
 
         // Address Details
         public string Address { get; private set; }
-        public string City { get; private set; }
-        public string State { get; private set; }
+        public Guid CityId { get; private set; } // Foreign key to City
+        public Guid StateId { get; private set; } // Foreign key to State
         public string PostalCode { get; private set; }
         public string Country { get; private set; }
         public decimal Latitude { get; private set; }
@@ -27,12 +27,14 @@ namespace TradeBuddy.Business.Domain.Entities
 
         public virtual BusinessType BusinessType { get; private set; } // Navigation property
         public virtual BusinessCategory BusinessCategory { get; private set; } // Navigation property
+        public virtual City City { get; private set; } // Navigation property for City
+        public virtual State State { get; private set; } // Navigation property for State
         public virtual List<Service> Services { get; private set; }
-        public virtual List<Media> MediaAttachments { get; private set; }
+        public virtual ICollection<WorkingDay> WorkingDays { get; private set; } = new List<WorkingDay>();
 
         // Review Summary (Read-Only)
-        public int TotalReviews { get; private set; } // تعداد کل نظرات
-        public double AverageRating { get; private set; } // میانگین امتیاز
+        public int TotalReviews { get; private set; } // Total number of reviews
+        public double AverageRating { get; private set; } // Average rating
 
         // Operational Information
         public bool IsVerified { get; private set; }
@@ -47,8 +49,8 @@ namespace TradeBuddy.Business.Domain.Entities
             string email,
             string phone,
             string address,
-            string city,
-            string state,
+            Guid cityId,
+            Guid stateId,
             string postalCode,
             string country,
             decimal latitude,
@@ -57,15 +59,15 @@ namespace TradeBuddy.Business.Domain.Entities
             Guid businessCategoryId,
             string createdBy)
         {
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid(); // Sequential GUID (handled by database)
             Name = name;
             Description = description;
             Website = website;
             Email = email;
             Phone = phone;
             Address = address;
-            City = city;
-            State = state;
+            CityId = cityId;
+            StateId = stateId;
             PostalCode = postalCode;
             Country = country;
             Latitude = latitude;
@@ -78,7 +80,6 @@ namespace TradeBuddy.Business.Domain.Entities
             UpdatedAt = DateTime.UtcNow;
 
             Services = new List<Service>();
-            MediaAttachments = new List<Media>();
 
             // Default review data
             TotalReviews = 0;
@@ -88,13 +89,24 @@ namespace TradeBuddy.Business.Domain.Entities
         public Business() // Parameterless constructor for EF
         {
             Services = new List<Service>();
-            MediaAttachments = new List<Media>();
         }
 
-        // متد برای بروزرسانی مشخصات کسب و کار
-        public void UpdateDetails(string name, string description, string website, string email, string phone,
-            string address, string city, string state, string postalCode, string country,
-            decimal latitude, decimal longitude, Guid businessTypeId, Guid businessCategoryId)
+        // Method to update business details
+        public void UpdateDetails(
+            string name,
+            string description,
+            string website,
+            string email,
+            string phone,
+            string address,
+            Guid cityId,
+            Guid stateId,
+            string postalCode,
+            string country,
+            decimal latitude,
+            decimal longitude,
+            Guid businessTypeId,
+            Guid businessCategoryId)
         {
             Name = name;
             Description = description;
@@ -102,17 +114,18 @@ namespace TradeBuddy.Business.Domain.Entities
             Email = email;
             Phone = phone;
             Address = address;
-            City = city;
-            State = state;
+            CityId = cityId;
+            StateId = stateId;
             PostalCode = postalCode;
             Country = country;
             Latitude = latitude;
             Longitude = longitude;
             BusinessTypeId = businessTypeId;
             BusinessCategoryId = businessCategoryId;
+            UpdatedAt = DateTime.UtcNow;
         }
 
-        // Methods to update review summary (from external service)
+        // Method to update review summary
         public void UpdateReviewSummary(int totalReviews, double averageRating)
         {
             TotalReviews = totalReviews;
@@ -120,7 +133,12 @@ namespace TradeBuddy.Business.Domain.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        // Other operational methods
-        public void VerifyBusiness() => IsVerified = true;
+        // Operational method to verify the business
+        public void VerifyBusiness()
+        {
+            IsVerified = true;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
+  
 }

@@ -2,13 +2,13 @@
 
 namespace TradeBuddy.Payment.Domain.Entities
 {
-    public class Wallet : BaseEntity<WalletId>
+    public class Wallet : BaseEntity<Guid>
     {
-        public WalletId Id { get; private set; }
+        public Guid Id { get; private set; }
         public UserId UserId { get; private set; }
         public Amount Balance { get; private set; }
 
-        public Wallet(WalletId id, UserId userId)
+        public Wallet(Guid id, UserId userId)
         {
             Id = id;
             UserId = userId;

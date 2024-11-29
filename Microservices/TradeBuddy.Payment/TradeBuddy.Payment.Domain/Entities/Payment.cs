@@ -7,16 +7,16 @@ using TradeBuddy.Payment.Domain.ValueObjects;
 
 namespace TradeBuddy.Payment.Domain.Entities
 {
-    public class Payment : BaseEntity<PaymentId>
+    public class Payment : BaseEntity<Guid>
     {
-        public PaymentId Id { get; private set; }
+        public Guid Id { get; private set; }
         public Amount Amount { get; private set; }
         public PaymentMethod PaymentMethod { get; private set; }
         public TransactionId TransactionId { get; private set; }
         public PaymentStatus Status { get; private set; }
         public DateTime PaymentDate { get; private set; }
 
-        public Payment(PaymentId id, Amount amount, PaymentMethod paymentMethod, TransactionId transactionId, PaymentStatus status)
+        public Payment(Guid id, Amount amount, PaymentMethod paymentMethod, TransactionId transactionId, PaymentStatus status)
         {
             Id = id;
             Amount = amount;

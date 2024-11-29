@@ -25,22 +25,6 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TimeSlot", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BusinessHoursBusinessId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BusinessHoursBusinessId");
-
-                    b.ToTable("TimeSlots");
-                });
-
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Business", b =>
                 {
                     b.Property<Guid>("Id")
@@ -60,9 +44,8 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                     b.Property<Guid>("BusinessTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -93,7 +76,9 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
@@ -117,9 +102,8 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("StateId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("TotalReviews")
                         .HasColumnType("int");
@@ -141,7 +125,12 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
 
                     b.HasIndex("BusinessCategoryId");
 
-                    b.HasIndex("BusinessTypeId");
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("BusinessTypeId", "BusinessCategoryId", "StateId")
+                        .HasDatabaseName("IX_BusinessType_Category_State");
 
                     b.ToTable("Businesses");
                 });
@@ -170,7 +159,9 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -190,12 +181,13 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
 
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.BusinessHours", b =>
                 {
-                    b.Property<Guid>("BusinessId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BusinessId1")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("BusinessId");
 
                     b.Property<string>("CreateBy")
                         .HasColumnType("nvarchar(max)");
@@ -209,9 +201,6 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                     b.Property<DateTime?>("DeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -221,9 +210,10 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("BusinessId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("BusinessId1");
+                    b.HasIndex("BusinessId")
+                        .IsUnique();
 
                     b.ToTable("BusinessHours");
                 });
@@ -261,16 +251,13 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BusinessType");
+                    b.ToTable("BusinessTypes");
                 });
 
-            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Media", b =>
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.City", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BusinessId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreateBy")
@@ -285,23 +272,15 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                     b.Property<DateTime?>("DeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("FileUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MimeType")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("StateId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
@@ -309,14 +288,14 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("UploadedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessId");
+                    b.HasIndex("StateId");
 
-                    b.ToTable("Media");
+                    b.HasIndex("Name", "StateId")
+                        .HasDatabaseName("IX_City_Name_State");
+
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Service", b =>
@@ -328,7 +307,7 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                     b.Property<Guid>("BusinessId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BusinessId1")
+                    b.Property<Guid>("BusinessId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreateBy")
@@ -379,30 +358,238 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
 
                     b.HasIndex("BusinessId1");
 
+                    b.HasIndex("ServiceName", "Price")
+                        .HasDatabaseName("IX_ServiceName_Price");
+
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.State", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleteBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("States");
+                });
+
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.TimeSlot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessHoursId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleteBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessHoursId");
+
+                    b.ToTable("TimeSlots");
                 });
 
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.WorkingDay", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("BusinessId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleteBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsOpen")
                         .HasColumnType("bit");
 
-                    b.HasKey("BusinessId", "Day");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "Date")
+                        .IsUnique();
 
                     b.ToTable("WorkingDays");
                 });
 
-            modelBuilder.Entity("TimeSlot", b =>
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Business", b =>
                 {
-                    b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessHours", null)
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessCategory", "BusinessCategory")
+                        .WithMany("Businesses")
+                        .HasForeignKey("BusinessCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessType", "BusinessType")
+                        .WithMany()
+                        .HasForeignKey("BusinessTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.State", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("BusinessCategory");
+
+                    b.Navigation("BusinessType");
+
+                    b.Navigation("City");
+
+                    b.Navigation("State");
+                });
+
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.BusinessHours", b =>
+                {
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.Business", "Business")
+                        .WithOne()
+                        .HasForeignKey("TradeBuddy.Business.Domain.Entities.BusinessHours", "BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.City", b =>
+                {
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.State", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("State");
+                });
+
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Service", b =>
+                {
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.Business", "Business")
+                        .WithMany("Services")
+                        .HasForeignKey("BusinessId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsMany("TradeBuddy.Business.Domain.ValueObjects.ServiceLocationType", "ServiceLocationTypes", b1 =>
+                        {
+                            b1.Property<Guid>("ServiceId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("LocationType")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ServiceId", "Id");
+
+                            b1.ToTable("ServiceLocationType");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ServiceId");
+                        });
+
+                    b.Navigation("Business");
+
+                    b.Navigation("ServiceLocationTypes");
+                });
+
+            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.TimeSlot", b =>
+                {
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessHours", "BusinessHours")
                         .WithMany("TimeSlots")
-                        .HasForeignKey("BusinessHoursBusinessId");
+                        .HasForeignKey("BusinessHoursId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsOne("TradeBuddy.Business.Domain.ValueObjects.Time", "EndTime", b1 =>
                         {
@@ -442,6 +629,8 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                                 .HasForeignKey("TimeSlotId");
                         });
 
+                    b.Navigation("BusinessHours");
+
                     b.Navigation("EndTime")
                         .IsRequired();
 
@@ -449,87 +638,14 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Business", b =>
-                {
-                    b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessCategory", "BusinessCategory")
-                        .WithMany("Businesses")
-                        .HasForeignKey("BusinessCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessType", "BusinessType")
-                        .WithMany()
-                        .HasForeignKey("BusinessTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BusinessCategory");
-
-                    b.Navigation("BusinessType");
-                });
-
-            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.BusinessHours", b =>
-                {
-                    b.HasOne("TradeBuddy.Business.Domain.Entities.Business", "Business")
-                        .WithMany()
-                        .HasForeignKey("BusinessId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Business");
-                });
-
-            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Media", b =>
-                {
-                    b.HasOne("TradeBuddy.Business.Domain.Entities.Business", "Business")
-                        .WithMany("MediaAttachments")
-                        .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Business");
-                });
-
-            modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Service", b =>
-                {
-                    b.HasOne("TradeBuddy.Business.Domain.Entities.Business", null)
-                        .WithMany()
-                        .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TradeBuddy.Business.Domain.Entities.Business", null)
-                        .WithMany("Services")
-                        .HasForeignKey("BusinessId1");
-
-                    b.OwnsMany("TradeBuddy.Business.Domain.ValueObjects.ServiceLocationType", "ServiceLocationTypes", b1 =>
-                        {
-                            b1.Property<Guid>("ServiceId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<string>("LocationType")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("ServiceId", "Id");
-
-                            b1.ToTable("ServiceLocationType");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ServiceId");
-                        });
-
-                    b.Navigation("ServiceLocationTypes");
-                });
-
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.WorkingDay", b =>
                 {
+                    b.HasOne("TradeBuddy.Business.Domain.Entities.Business", null)
+                        .WithMany("WorkingDays")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("TradeBuddy.Business.Domain.Entities.BusinessHours", null)
                         .WithMany("WorkingDays")
                         .HasForeignKey("BusinessId")
@@ -539,9 +655,9 @@ namespace TradeBuddy.Business.Infrastructure.Migrations
 
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.Business", b =>
                 {
-                    b.Navigation("MediaAttachments");
-
                     b.Navigation("Services");
+
+                    b.Navigation("WorkingDays");
                 });
 
             modelBuilder.Entity("TradeBuddy.Business.Domain.Entities.BusinessCategory", b =>

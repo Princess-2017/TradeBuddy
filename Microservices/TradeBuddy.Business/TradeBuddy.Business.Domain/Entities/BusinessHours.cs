@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using TradeBuddy.Business.Domain.ValueObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TradeBuddy.Business.Domain.Entities
 {
     public class BusinessHours : BaseEntity<Guid>
     {
-        public Guid BusinessId { get; private set; } // Foreign key
-        public virtual Business Business { get; private set; } // Navigation property
-        public virtual List<WorkingDay> WorkingDays { get; private set; } // Collection of WorkingDays
-        public virtual List<TimeSlot> TimeSlots { get; private set; } // Collection of TimeSlots
+        // Foreign key to Business
+        [Column("BusinessId")]
+        public Guid BusinessId { get; private set; }
+
+        // Navigation to Business (virtual for lazy loading)
+        public virtual Business Business { get; private set; }
+
+        // Navigation to WorkingDays (virtual for lazy loading)
+        public virtual List<WorkingDay> WorkingDays { get; private set; }
+
+        // Navigation to TimeSlots (virtual for lazy loading)
+        public virtual List<TimeSlot> TimeSlots { get; private set; }
 
         public BusinessHours()
         {

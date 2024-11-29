@@ -10,7 +10,8 @@ namespace TradeBuddy.Business.Domain.Entities
         public decimal Price { get; private set; }
         public ICollection<ServiceLocationType> ServiceLocationTypes { get; private set; } = new List<ServiceLocationType>();
 
-        public Guid BusinessId { get; private set; }
+        public Guid BusinessId { get; private set; } // Foreign key to Business
+        public virtual Business Business { get; private set; } // Navigation property for Business
 
         // Time properties
         public int StartHour { get; private set; }
@@ -19,7 +20,7 @@ namespace TradeBuddy.Business.Domain.Entities
         public int EndMinute { get; private set; }
 
         // Constructor for creating a new service
-        public Service(string serviceName, decimal price, ServiceLocationType locationType, string createdBy, Time startTime, Time endTime)
+        public Service(string serviceName, decimal price, ServiceLocationType locationType, string createdBy, Time startTime, Time endTime, Guid businessId)
         {
             Id = Guid.NewGuid();
             ServiceName = serviceName;
@@ -30,6 +31,7 @@ namespace TradeBuddy.Business.Domain.Entities
             EndHour = endTime.Hour;
             EndMinute = endTime.Minute;
             CreateBy = createdBy;
+            BusinessId = businessId;
         }
 
         // Parameterless constructor for EF
@@ -51,4 +53,5 @@ namespace TradeBuddy.Business.Domain.Entities
             Update(updatedBy);
         }
     }
+
 }

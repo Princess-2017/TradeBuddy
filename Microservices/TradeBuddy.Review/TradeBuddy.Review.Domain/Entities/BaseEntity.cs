@@ -1,5 +1,4 @@
-﻿
-namespace TradeBuddy.Review.Domain.Entities
+﻿namespace TradeBuddy.Review.Domain.Entities
 {
     public abstract class BaseEntity<TId>
     {
@@ -28,8 +27,13 @@ namespace TradeBuddy.Review.Domain.Entities
         public void Update(string updatedBy)
         {
             UpdateBy = updatedBy;
+            SetUpdateDate();
+        }
+
+        // Method to update UpdateDate inside the BaseEntity class
+        protected void SetUpdateDate()
+        {
             UpdateDate = DateTime.UtcNow;
         }
     }
-
 }
