@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TradeBuddy.FileManager.Application.Common.Interfaces;
 using TradeBuddy.FileManager.Infrastructure.Context;
 
 namespace TradeBuddy.FileManager.Application.Services
 {
-    public class FileManagerService
+    public class FileManagerService:IFileManagerService
     {
         private readonly IMongoCollection<TradeBuddy.FileManager.Domain.Entities.File> _fileCollection;
 

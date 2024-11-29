@@ -4,7 +4,7 @@ using TradeBuddy.Order.Domain.ValueObjects;
 
 namespace TradeBuddy.Order.Domain.Entities
 {
-    public class Order : BaseEntity<OrderId>
+    public class Order : BaseEntity<Guid>
     {
         public DateTime OrderDate { get; private set; }
         public decimal TotalAmount { get; private set; }
@@ -17,7 +17,7 @@ namespace TradeBuddy.Order.Domain.Entities
         // Make the Items navigation property virtual
         public virtual IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
 
-        public Order(OrderId id, Guid customerId, DateTime orderDate, string orderType)
+        public Order(Guid id, Guid customerId, DateTime orderDate, string orderType)
         {
             Id = id;
             CustomerId = customerId;
@@ -36,6 +36,13 @@ namespace TradeBuddy.Order.Domain.Entities
         {
             _items.Remove(item);
             TotalAmount -= item.TotalPrice + item.Tax + item.Insurance; // Subtract tax and insurance
+        }
+        public void MarkAsDeleted()
+        {
+            if (IsDeleted)
+                throw new InvalidOperationException("The order is already marked as deleted.");
+
+            IsDeleted = true;
         }
 
         public void CompleteOrder()

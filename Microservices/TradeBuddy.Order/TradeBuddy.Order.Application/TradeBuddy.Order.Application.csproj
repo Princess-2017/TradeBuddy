@@ -7,10 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Command\" />
-    <Folder Include="Dto\" />
+    <Folder Include="Common\Interfaces\" />
     <Folder Include="Extentions\" />
-    <Folder Include="Queries\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TradeBuddy.Order.Domain\TradeBuddy.Order.Domain.csproj" />
   </ItemGroup>
 
 </Project>

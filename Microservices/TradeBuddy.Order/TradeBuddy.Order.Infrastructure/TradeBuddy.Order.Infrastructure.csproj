@@ -24,8 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TradeBuddy.Order.Application\TradeBuddy.Order.Application.csproj" />
     <ProjectReference Include="..\TradeBuddy.Order.Domain\TradeBuddy.Order.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Messaging\" />
   </ItemGroup>
 
 </Project>

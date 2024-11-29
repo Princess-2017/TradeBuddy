@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,10 +22,6 @@
     <ProjectReference Include="..\TradeBuddy.FileManager.Application\TradeBuddy.FileManager.Application.csproj" />
     <ProjectReference Include="..\TradeBuddy.FileManager.Domain\TradeBuddy.FileManager.Domain.csproj" />
     <ProjectReference Include="..\TradeBuddy.FileManager.Infrastructure\TradeBuddy.FileManager.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -17,11 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TradeBuddy.Order.Application\TradeBuddy.Order.Application.csproj" />
+    <ProjectReference Include="..\TradeBuddy.Order.Domain\TradeBuddy.Order.Domain.csproj" />
     <ProjectReference Include="..\TradeBuddy.Order.Infrastructure\TradeBuddy.Order.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controller\" />
   </ItemGroup>
 
 </Project>

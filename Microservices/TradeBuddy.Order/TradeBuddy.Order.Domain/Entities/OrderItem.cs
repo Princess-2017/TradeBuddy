@@ -4,7 +4,7 @@ using TradeBuddy.Order.Domain.ValueObjects;
 
 namespace TradeBuddy.Order.Domain.Entities
 {
-    public class OrderItem : BaseEntity<OrderItemId>
+    public class OrderItem : BaseEntity<Guid>
     {
         public Guid ProductId { get; private set; } // برای کالاها
         public int Quantity { get; private set; }
@@ -17,7 +17,7 @@ namespace TradeBuddy.Order.Domain.Entities
         public decimal Insurance { get; private set; } // بیمه
         public TimeSpan? ServiceDuration { get; private set; } // برای خدمات
 
-        public OrderItem(OrderItemId id, Guid productId, int quantity, decimal unitPrice, OrderId orderId, decimal tax, decimal insurance, TimeSpan? serviceDuration = null)
+        public OrderItem(Guid id, Guid productId, int quantity, decimal unitPrice, Guid orderId, decimal tax, decimal insurance, TimeSpan? serviceDuration = null)
         {
             Id = id;
             ProductId = productId;

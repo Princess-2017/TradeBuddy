@@ -2,8 +2,6 @@
 using System.Reflection;
 using System.Linq; // Ensure you include this for LINQ methods
 using TradeBuddy.Order.Domain.Interfaces;
-using TradeBuddy.Order.Application.Common.Interfaces;
-using TradeBuddy.Order.Infrastructure.Messaging;
 
 namespace TradeBuddy.Order.Infrastructure
 {
@@ -11,7 +9,7 @@ namespace TradeBuddy.Order.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddSingleton<IMessagingService, RabbitMqService>();
+            //services.AddSingleton<IMessagingService, RabbitMqService>();
             // Automatically register all repositories
             RegisterRepositories(services);
             return services;

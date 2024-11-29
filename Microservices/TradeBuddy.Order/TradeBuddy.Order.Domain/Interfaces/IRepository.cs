@@ -1,4 +1,5 @@
 ﻿
+using System.Linq.Expressions;
 using TradeBuddy.Order.Domain.Entities;
 
 namespace TradeBuddy.Order.Domain.Interfaces
@@ -11,5 +12,6 @@ namespace TradeBuddy.Order.Domain.Interfaces
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(TKey id);
+        Task<List<T>> SearchAsync(Expression<Func<T, bool>> predicate);
     }
 }
