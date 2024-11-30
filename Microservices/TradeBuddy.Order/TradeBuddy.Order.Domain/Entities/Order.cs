@@ -9,6 +9,7 @@ namespace TradeBuddy.Order.Domain.Entities
         public DateTime OrderDate { get; private set; }
         public decimal TotalAmount { get; private set; }
         public Guid CustomerId { get; private set; }
+        public int? PricingPlanId { get; set; } // پلن درآمدی مرتبط (در صورت وجود)
         public string Status { get; private set; }
         public string OrderType { get; private set; } // "Product" or "Service"
 

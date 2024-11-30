@@ -7,11 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TradeBuddy.Store.Domain\TradeBuddy.Store.Domain.csproj" />
+    <ProjectReference Include="..\TradeBuddy.Pricing.Domain\TradeBuddy.Pricing.Domain.csproj" />
+    <ProjectReference Include="..\TradeBuddy.Pricing.Infrastructure\TradeBuddy.Pricing.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
