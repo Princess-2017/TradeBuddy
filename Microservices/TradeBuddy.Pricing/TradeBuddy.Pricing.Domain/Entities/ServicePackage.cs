@@ -15,6 +15,6 @@ namespace TradeBuddy.Pricing.Domain.Entities
         public DateTime UpdatedAt { get; set; } // زمان آخرین ویرایش
 
         // ارتباط با آیتم‌های داخل پکیج
-        public ICollection<ServicePackageItem> Items { get; set; }
+        public virtual ICollection<ServicePackageItem> Items { get; set; } 
     }
 }

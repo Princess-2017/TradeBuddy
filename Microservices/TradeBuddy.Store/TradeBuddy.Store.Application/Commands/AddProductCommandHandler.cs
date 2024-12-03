@@ -21,7 +21,6 @@ namespace TradeBuddy.Store.Application.Commands
         {
             var product = new Product
             {
-                Id = Guid.NewGuid(),
                 Name = new Domain.ValueObjects.ProductName(request.Name),
                 Price = new Domain.ValueObjects.Price(request.Price),
                 CategoryId = request.CategoryId,

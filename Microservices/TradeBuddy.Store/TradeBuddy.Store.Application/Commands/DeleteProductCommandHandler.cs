@@ -16,7 +16,7 @@ namespace TradeBuddy.Store.Application.Commands
         {
             var product = await _productRepository.GetByIdAsync(request.ProductId);
 
-            product.MarkAsDeleted();
+            product.MarkAsDeleted("");
             await _productRepository.UpdateAsync(product);
             return product.Id;
         }

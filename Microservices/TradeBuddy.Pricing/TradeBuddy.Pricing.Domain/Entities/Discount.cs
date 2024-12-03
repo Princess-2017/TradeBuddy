@@ -16,9 +16,9 @@ namespace TradeBuddy.Pricing.Domain.Entities
 
         // ارتباط با نرخ‌نامه یا پلن درآمدی
         public int? RatePlanId { get; set; } // نرخ‌نامه مرتبط (در صورت وجود)
-        public RatePlan RatePlan { get; set; }
+        public virtual RatePlan RatePlan { get; set; }
         public int? PricingPlanId { get; set; } // پلن درآمدی مرتبط (در صورت وجود)
-        public PricingPlan PricingPlan { get; set; }
+        public virtual PricingPlan PricingPlan { get; set; }
     }
 
 }
