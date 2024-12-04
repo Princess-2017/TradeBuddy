@@ -4,6 +4,7 @@ namespace TradeBuddy.Store.Domain.Entities
 {
     public class Category : BaseEntity<Guid>
     {
+        public Guid StoreId { get; set; }  // شناسه فروشگاه
         public virtual CategoryName Name { get; private set; }
         public virtual List<Product> Products { get; private set; } // ویژگی ناوبری برای محصولات
         public virtual Category? ParentCategory { get; private set; } // رابطه والد (اختیاری)

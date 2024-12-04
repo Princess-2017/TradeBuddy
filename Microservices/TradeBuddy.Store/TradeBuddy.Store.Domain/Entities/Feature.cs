@@ -2,6 +2,7 @@
 {
     public class Feature : BaseEntity<Guid>
     {
+        public Guid StoreId { get; set; }  // شناسه فروشگاه
         public string Name { get; set; }
 
         // روابط وابستگی‌ها (ویژگی‌هایی که به این ویژگی وابسته هستند)

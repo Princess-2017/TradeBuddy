@@ -4,7 +4,7 @@ using TradeBuddy.Auth.Domain.ValueObjects;
 
 namespace TradeBuddy.Auth.Domain.Entities
 {
-    public class Role : BaseEntity<RoleId>
+    public class Role : BaseEntity<Guid>
     {
         public string Name { get; private set; }
         public virtual List<Permission> Permissions { get; private set; } = new();
@@ -12,8 +12,9 @@ namespace TradeBuddy.Auth.Domain.Entities
         // سازنده بدون پارامتر برای EF Core
         private Role() { }
 
-        public Role(string name)
+        public Role(Guid id,string name)
         {
+            Id = id;
             Name = name;
         }
 

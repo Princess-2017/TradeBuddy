@@ -13,6 +13,8 @@ namespace TradeBuddy.Store.Application.Dto
         public decimal Price { get; set; }
         public Guid? CategoryId { get; set; }
         public Guid BrandId { get; set; }
+        public string CategoryName { get; set; }
+        public string BrandName { get; set; }
     }
 
 }

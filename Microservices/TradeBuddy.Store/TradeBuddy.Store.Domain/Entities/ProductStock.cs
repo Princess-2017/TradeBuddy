@@ -2,6 +2,7 @@
 {
     public class ProductStock : BaseEntity<Guid>
     {
+        public Guid StoreId { get; set; }  // شناسه فروشگاه
         public Guid ProductId { get; set; }  // شناسه محصول
         public Guid ProductVariantId { get; set; }  // شناسه ویژگی محصول (مثل رنگ و سایز)
         public int TotalStock { get; set; }  // موجودی کل محصول برای این ویژگی خاص

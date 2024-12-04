@@ -56,5 +56,13 @@ namespace TradeBuddy.Auth.Infrastructure.Repositories
         {
             return await _dbSet.Where(predicate).ToListAsync();
         }
+
+        public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+        {
+            if (predicate == null)
+                throw new ArgumentNullException(nameof(predicate));
+
+            return await _dbSet.AnyAsync(predicate);
+        }
     }
 }

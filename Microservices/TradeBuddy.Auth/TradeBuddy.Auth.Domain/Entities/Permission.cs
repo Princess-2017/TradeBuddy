@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TradeBuddy.Auth.Domain.ValueObjects;
 
 namespace TradeBuddy.Auth.Domain.Entities;
-public class Permission : BaseEntity<PermissionId>
+public class Permission : BaseEntity<Guid>
 {
     public string Name { get; private set; }
     public string ObjectType { get; private set; } // نوع شیء (مثلاً منو، دکمه)
@@ -15,8 +15,9 @@ public class Permission : BaseEntity<PermissionId>
 
     private Permission() { }
 
-    public Permission(string name, string objectType, string objectKey, string action)
+    public Permission(Guid id,string name, string objectType, string objectKey, string action)
     {
+        Id = id;
         Name = name ?? throw new ArgumentNullException(nameof(name));
         ObjectType = objectType ?? throw new ArgumentNullException(nameof(objectType));
         ObjectKey = objectKey ?? throw new ArgumentNullException(nameof(objectKey));

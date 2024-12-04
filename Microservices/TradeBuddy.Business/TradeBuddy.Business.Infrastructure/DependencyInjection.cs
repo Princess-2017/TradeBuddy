@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Linq; // Ensure you include this for LINQ methods
 using TradeBuddy.Business.Domain.Interfaces;
 using TradeBuddy.Business.Application.Common.Interfaces;
-using TradeBuddy.Business.Infrastructure.Messaging;
+//using TradeBuddy.Business.Infrastructure.Messaging;
 
 namespace TradeBuddy.Customer.Infrastructure
 {
@@ -11,7 +11,7 @@ namespace TradeBuddy.Customer.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddSingleton<IMessagingService, RabbitMqService>();
+            //services.AddSingleton<IMessagingService, RabbitMqService>();
             // Automatically register all repositories
             RegisterRepositories(services);
             return services;

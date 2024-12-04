@@ -12,6 +12,7 @@ namespace TradeBuddy.Auth.Domain.Interfaces
         Task UpdateAsync(T entity);
         Task DeleteAsync(TKey id);
         Task<List<T>> SearchAsync(Expression<Func<T, bool>> predicate);
+        Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
     }
 }
 

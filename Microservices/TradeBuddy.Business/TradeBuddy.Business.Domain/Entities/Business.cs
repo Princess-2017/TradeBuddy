@@ -31,6 +31,7 @@ namespace TradeBuddy.Business.Domain.Entities
         public virtual State State { get; private set; } // Navigation property for State
         public virtual List<Service> Services { get; private set; }
         public virtual ICollection<WorkingDay> WorkingDays { get; private set; } = new List<WorkingDay>();
+        public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
 
         // Review Summary (Read-Only)
         public int TotalReviews { get; private set; } // Total number of reviews

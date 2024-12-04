@@ -2,6 +2,7 @@
 {
     public class ProductFeature : BaseEntity<Guid>
     {
+        public Guid StoreId { get; set; }  // شناسه فروشگاه
         public Guid ProductId { get; set; }
         public Guid FeatureValueId { get; set; }  // ارتباط با FeatureValue
         public Guid FeatureId { get; set; }

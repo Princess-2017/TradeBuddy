@@ -24,7 +24,8 @@ namespace TradeBuddy.Store.Application.Commands
                 Name = new Domain.ValueObjects.ProductName(request.Name),
                 Price = new Domain.ValueObjects.Price(request.Price),
                 CategoryId = request.CategoryId,
-                BrandId = request.BrandId
+                BrandId = request.BrandId,
+                StoreId = request.StoreId
             };
             await _productRepository.AddAsync(product);
             return product.Id;

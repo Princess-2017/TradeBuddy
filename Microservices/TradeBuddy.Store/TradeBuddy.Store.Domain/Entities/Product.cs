@@ -3,6 +3,7 @@ using TradeBuddy.Store.Domain.ValueObjects;
 
 public class Product : BaseEntity<Guid>
 {
+    public Guid StoreId { get; set; }  // شناسه فروشگاه
     public virtual ProductName Name { get; set; }
     public virtual Price Price { get; set; }
     public Guid? CategoryId { get; set; }

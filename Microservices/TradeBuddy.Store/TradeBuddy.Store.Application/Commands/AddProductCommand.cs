@@ -13,13 +13,15 @@ namespace TradeBuddy.Store.Application.Commands
         public decimal Price { get; set; }
         public Guid CategoryId { get; set; }
         public Guid BrandId { get; set; }
+        public Guid StoreId { get; set; }
 
-        public AddProductCommand(string name, decimal price, Guid categoryId, Guid brandId)
+        public AddProductCommand(string name, decimal price, Guid categoryId, Guid brandId, Guid storeId)
         {
             Name = name;
             Price = price;
             CategoryId = categoryId;
             BrandId = brandId;
+            StoreId = storeId;
         }
     }
 }

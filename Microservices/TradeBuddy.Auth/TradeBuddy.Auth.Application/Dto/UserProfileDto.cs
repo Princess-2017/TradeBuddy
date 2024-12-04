@@ -14,6 +14,6 @@ namespace TradeBuddy.Auth.Application.Dto
         public string FullName { get; set; }
         public string RegisteredAt { get; set; }
         public string Address { get; set; }
-        // سایر فیلدها برای پروفایل کاربری
+        
     }
 }

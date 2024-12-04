@@ -28,6 +28,7 @@ namespace TradeBuddy.Order.Infrastructure.Migrations
             modelBuilder.Entity("TradeBuddy.Order.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreateBy")
@@ -58,6 +59,9 @@ namespace TradeBuddy.Order.Infrastructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<int?>("PricingPlanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -82,6 +86,7 @@ namespace TradeBuddy.Order.Infrastructure.Migrations
             modelBuilder.Entity("TradeBuddy.Order.Domain.Entities.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreateBy")

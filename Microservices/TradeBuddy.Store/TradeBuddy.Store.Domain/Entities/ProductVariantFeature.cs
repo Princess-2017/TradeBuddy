@@ -8,6 +8,7 @@ namespace TradeBuddy.Store.Domain.Entities
 {
     public class ProductVariantFeature : BaseEntity<Guid>
     {
+        public Guid StoreId { get; set; }  // شناسه فروشگاه
         public Guid ProductVariantId { get; set; }  // ارجاع به ترکیب محصول
         public Guid FeatureId { get; set; }         // ارجاع به ویژگی (مثلاً رنگ، سایز، جنس)
         public Guid FeatureValueId { get; set; }   // ارجاع به مقدار ویژگی (مثلاً قرمز، لارج، چرم)

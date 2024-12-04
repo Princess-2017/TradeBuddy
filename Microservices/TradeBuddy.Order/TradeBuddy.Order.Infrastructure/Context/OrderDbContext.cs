@@ -14,17 +14,6 @@ namespace TradeBuddy.Order.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Create value converters for OrderId and OrderItemId
-            var orderIdConverter = new ValueConverter<OrderId, Guid>(
-                v => v.Value, // Convert OrderId to Guid
-                v => new OrderId(v) // Convert Guid back to OrderId
-            );
-
-            var orderItemIdConverter = new ValueConverter<OrderItemId, Guid>(
-                v => v.Value, // Convert OrderItemId to Guid
-                v => new OrderItemId(v) // Convert Guid back to OrderItemId
-            );
-
             // Fluent API configurations for Order entity
             modelBuilder.Entity<TradeBuddy.Order.Domain.Entities.Order>(entity =>
             {
@@ -32,7 +21,6 @@ namespace TradeBuddy.Order.Infrastructure.Context
 
                 // Configure the Id property to use the value converter
                 entity.Property(o => o.Id)
-                    .HasConversion(orderIdConverter)
                     .IsRequired();
 
                 entity.Property(o => o.OrderDate)
@@ -67,7 +55,6 @@ namespace TradeBuddy.Order.Infrastructure.Context
 
                 // Configure the Id property to use the value converter
                 entity.Property(oi => oi.Id)
-                    .HasConversion(orderItemIdConverter) // Use the value converter
                     .IsRequired();
 
                 entity.Property(oi => oi.ProductId)

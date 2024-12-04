@@ -3,12 +3,12 @@ using TradeBuddy.Auth.Domain.ValueObjects;
 
 namespace TradeBuddy.Auth.Domain.Entities
 {
-    public class UserRole : BaseEntity<UserRoleId>
+    public class UserRole : BaseEntity<Guid>
     {
-        public UserId UserId { get; private set; }
-        public RoleId RoleId { get; private set; }
+        public Guid UserId { get; private set; }
+        public Guid RoleId { get; private set; }
 
-        public UserRole(UserId userId, RoleId roleId)
+        public UserRole(Guid userId, Guid roleId)
         {
             if (userId == null || roleId == null)
                 throw new ArgumentNullException("UserId and RoleId cannot be null.");

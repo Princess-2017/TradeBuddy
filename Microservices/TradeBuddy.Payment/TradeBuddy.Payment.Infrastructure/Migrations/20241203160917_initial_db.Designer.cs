@@ -12,8 +12,8 @@ using TradeBuddy.Payment.Infrastructure.Context;
 namespace TradeBuddy.Payment.Infrastructure.Migrations
 {
     [DbContext(typeof(PaymentDbContext))]
-    [Migration("20241128220137_initial_db2")]
-    partial class initial_db2
+    [Migration("20241203160917_initial_db")]
+    partial class initial_db
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

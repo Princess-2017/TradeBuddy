@@ -32,6 +32,10 @@ namespace TradeBuddy.Store.Application.Queries
                 products = products.Where(p => p.BrandId == request.BrandId.Value).ToList();
             }
 
+
+            products = products.Where(p => p.StoreId == request.StoreId).ToList();
+
+
             return products.Select(p => new ProductDto
             {
                 Id = p.Id,

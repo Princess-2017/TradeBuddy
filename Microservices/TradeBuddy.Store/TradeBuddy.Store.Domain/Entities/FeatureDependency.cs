@@ -2,8 +2,8 @@
 {
     public class FeatureDependency : BaseEntity<Guid>
     {
-        public Guid FeatureId { get; private set; } // شناسه ویژگی اصلی
-        public Guid DependentFeatureId { get; private set; } // شناسه ویژگی وابسته
+        public Guid FeatureId { get; set; } // شناسه ویژگی اصلی
+        public Guid DependentFeatureId { get; set; } // شناسه ویژگی وابسته
 
         // ارتباط با Feature اصلی
         public virtual Feature Feature { get; private set; }

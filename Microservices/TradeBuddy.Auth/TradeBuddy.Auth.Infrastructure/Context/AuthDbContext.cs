@@ -70,37 +70,6 @@ namespace TradeBuddy.Auth.Infrastructure.Context
             modelBuilder.Entity<User>()
                 .OwnsOne(u => u.Email);
 
-            // مبدل‌ها برای شناسه‌ها
-            modelBuilder.Entity<Permission>()
-                .Property(p => p.Id)
-                .HasConversion(
-                    id => id.Value, // تبدیل از PermissionId به نوع قابل ذخیره
-                    value => new PermissionId(value)); // تبدیل از نوع ذخیره به PermissionId
-
-            modelBuilder.Entity<Role>()
-                .Property(r => r.Id)
-                .HasConversion(
-                    id => id.Value, // تبدیل از RoleId به نوع قابل ذخیره
-                    value => new RoleId(value)); // تبدیل از نوع ذخیره به RoleId
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.Id)
-                .HasConversion(
-                    id => id.Value, // تبدیل از UserId به نوع قابل ذخیره
-                    value => new UserId(value)); // تبدیل از نوع ذخیره به UserId
-
-            modelBuilder.Entity<RolePermission>()
-                .Property(rp => rp.Id)
-                .HasConversion(
-                    id => id.Value, // تبدیل از RolePermissionId به نوع قابل ذخیره
-                    value => new RolePermissionId(value)); // تبدیل از نوع ذخیره به RolePermissionId
-
-            modelBuilder.Entity<UserRole>()
-                .Property(ur => ur.Id)
-                .HasConversion(
-                    id => id.Value, // تبدیل از UserRoleId به نوع قابل ذخیره
-                    value => new UserRoleId(value)); // تبدیل از نوع ذخیره به UserRoleId
-
             // اطمینان از اینکه ویژگی‌های مجازی برای لیزی لودینگ وجود دارند
             modelBuilder.Entity<Role>()
                 .Navigation(r => r.Permissions)

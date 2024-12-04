@@ -12,7 +12,7 @@ using TradeBuddy.Order.Infrastructure.Context;
 namespace TradeBuddy.Order.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    [Migration("20241030191313_initial_db")]
+    [Migration("20241203155410_initial_db")]
     partial class initial_db
     {
         /// <inheritdoc />
@@ -31,6 +31,7 @@ namespace TradeBuddy.Order.Infrastructure.Migrations
             modelBuilder.Entity("TradeBuddy.Order.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreateBy")
@@ -61,6 +62,9 @@ namespace TradeBuddy.Order.Infrastructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<int?>("PricingPlanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -85,6 +89,7 @@ namespace TradeBuddy.Order.Infrastructure.Migrations
             modelBuilder.Entity("TradeBuddy.Order.Domain.Entities.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreateBy")

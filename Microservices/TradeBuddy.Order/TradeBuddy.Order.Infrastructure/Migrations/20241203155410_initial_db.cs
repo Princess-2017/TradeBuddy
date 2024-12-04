@@ -19,6 +19,7 @@ namespace TradeBuddy.Order.Infrastructure.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PricingPlanId = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     OrderType = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),

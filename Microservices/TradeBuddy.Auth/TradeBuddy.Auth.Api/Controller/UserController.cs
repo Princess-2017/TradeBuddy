@@ -17,6 +17,26 @@ namespace TradeBuddy.Business.Api.Controllers
             _mediator = mediator;
         }
 
+
+        /// <summary>
+        /// ثبت‌نام کاربر جدید
+        /// </summary>
+        /// <param name="command">اطلاعات ثبت‌نام کاربر</param>
+        [HttpPost("registeradmin")]
+        public async Task<IActionResult> Register([FromBody] RegisterAdminCommand command)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("اطلاعات وارد شده نامعتبر است.");
+
+            var result = await _mediator.Send(command);
+            if (result == null)
+                return BadRequest("خطا در ایجاد حساب کاربری.");
+
+            return CreatedAtAction(nameof(Login), new { username = command.Username }, "حساب کاربری با موفقیت ایجاد شد.");
+        }
+
+
+
         /// <summary>
         /// ثبت‌نام کاربر جدید
         /// </summary>
@@ -33,6 +53,25 @@ namespace TradeBuddy.Business.Api.Controllers
 
             return CreatedAtAction(nameof(Login), new { username = command.Username }, "حساب کاربری با موفقیت ایجاد شد.");
         }
+
+        /// <summary>
+        /// ثبت‌نام کاربر جدید
+        /// </summary>
+        /// <param name="command">اطلاعات ثبت‌نام کاربر</param>
+        [HttpPost("registerbusinessowner")]
+        public async Task<IActionResult> Register([FromBody] RegisterBusinessOwnerCommand command)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("اطلاعات وارد شده نامعتبر است.");
+
+            var result = await _mediator.Send(command);
+            if (result == null)
+                return BadRequest("خطا در ایجاد حساب کاربری.");
+
+            return CreatedAtAction(nameof(Login), new { username = command.Username }, "حساب کاربری با موفقیت ایجاد شد.");
+        }
+
+
 
         /// <summary>
         /// ورود به سیستم
